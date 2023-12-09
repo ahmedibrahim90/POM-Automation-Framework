@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite parallel="false" name="NopeCommerce Regression Suite">
+	<parameter name="browser" value="chrome"></parameter>
+	<test name="Regression Test">
+		<classes>
+			<class name="tests.PharmacyRegistrationTest">
+				<methods>
+					<include name=""></include>
+				</methods>
+			</class>
+			<class name="tests.LoginTest">
+				<methods>
+					<exclude name=""></exclude>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite> 
