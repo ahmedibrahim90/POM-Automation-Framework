@@ -53,7 +53,7 @@ public class TestBase {
 	@AfterSuite
 	public void stopDriver()
 	{
-		driver.quit();
+		//driver.quit();
 	}
 	
 	//Take screenshot when test case fails and add it in the screenshot folder.

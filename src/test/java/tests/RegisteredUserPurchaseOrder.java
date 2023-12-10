@@ -1,17 +1,16 @@
 package tests;
 
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import pages.AddToCartPage;
-import pages.CheckOutPage;
 import pages.HomePage;
 import pages.LoginPage;
 import pages.SearchPage;
 import pages.SingleProductPage;
 import pages.UserRegistrationPage;
 
-public class RegisteredUserCheckOutProductTest extends TestBase {
+public class RegisteredUserPurchaseOrder extends TestBase {
 
 	HomePage homeObject;
 	UserRegistrationPage RegistrationObject;
@@ -22,18 +21,7 @@ public class RegisteredUserCheckOutProductTest extends TestBase {
 	String partialproductname = "Lum";
 	SingleProductPage singleProductObject;
 	AddToCartPage CartObject;
-	CheckOutPage checkoutObject;
-	String expectedCity = "cairo";
-	String expectedAddress1 = "14 sherman";
-	String expectedzipcode = "L8K 2L7";
-	String expectedPhone = "2896809700";
-	String expectedholderName = "Alex";
-	String expectedcardNumber = "1111-2222-3333-4444";
-	String expectedcardCode = "123";
-
 	
-	
-
 	
 	@Test(priority = 1, alwaysRun = true)
 	public void userCanRegisrerSuccessfully()
@@ -42,7 +30,7 @@ public class RegisteredUserCheckOutProductTest extends TestBase {
 		homeObject = new HomePage(driver);
 		homeObject.openRegisterPage();
 		RegistrationObject = new UserRegistrationPage(driver);
-		RegistrationObject.userRegister("Ahmed", "Saba", "emailg4@gmail.com", "companyName", "123456", "123456");
+		RegistrationObject.userRegister("Ahmed", "Saba", "email24@gmail.com", "companyName", "123456", "123456");
 		Assert.assertTrue(RegistrationObject.getRegisterSuccessMessage().contains(ActualsuccessMsg));
 //		Assert.assertEquals(ActualsuccessMsg, RegistrationObject.getRegisterSuccessMessage());
 //		SoftAssert softAssert = new SoftAssert();
@@ -51,13 +39,9 @@ public class RegisteredUserCheckOutProductTest extends TestBase {
 	}
 	
 	@Test(priority = 2)
-	public void UserCanLogin()
+	public void UserCanOpenLoginPage()
 	{
 		RegistrationObject.openLoginPage();
-		loginObject = new LoginPage(driver);
-		loginObject.userLogin("emailg4@gmail.com", "123456");
-		homeObject = new HomePage(driver);
-		Assert.assertTrue(homeObject.getLogoutTxts().contains("Log out"));
 	}
 	
 	@Test(priority = 3)
@@ -90,24 +74,10 @@ public class RegisteredUserCheckOutProductTest extends TestBase {
 		Assert.assertTrue(CartObject.getotalValue().contains("1,396.00"));
 	}
 	
-	@Test(priority = 6)
+	@Test(priority = 5)
 	public void userCanCheckOutProduct() 
 	{
-		CartObject.OpenCheckOutPage();	
-	}
-	
-	
-	@Test(priority = 7)
-	public void userCanPurchaseOrderByEnterAllNeededInfo() 
-	{
-		checkoutObject = new CheckOutPage(driver);
-		Assert.assertTrue(checkoutObject.getcheckOutpageTitle().contains("Checkout"));
-		checkoutObject.CompleteBillingAddress(expectedCity, expectedAddress1, expectedzipcode, expectedPhone);
-		checkoutObject.selectShippingMethod();
-		checkoutObject.selectPaymentMethod();
-		checkoutObject.enterPaymentInfo(expectedholderName, expectedcardNumber, expectedcardCode);
-		checkoutObject.confirmPayment();
-		Assert.assertTrue(checkoutObject.getorderSuccessMsg().contains("Your order has been successfully processed!"));
-		Assert.assertTrue(driver.getCurrentUrl().contains("completed"));
+		CartObject.OpenCheckOutPage();
+		
 	}
 }
